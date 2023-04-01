@@ -74,9 +74,16 @@ class OutputView(QTextBrowser):
                 outputGroup.addBlanksBetween()
                 outputGroup.addSiblingPrefixes()
         else:
-            outputGroup = treeoutput.OutputGroup(selSpots)
-            outputGroup.addBlanksBetween()
-            outputGroup.addSiblingPrefixes()
+            if len(selSpots) > 1 and self.showDescendants:
+                outputGroup = treeoutput.OutputGroup(selSpots, True, True)
+                if outputGroup.hasPrefixes():
+                    outputGroup.combineAllSiblings()
+                outputGroup.addBlanksBetween()
+                outputGroup.addAbsoluteIndents()
+            else:
+                outputGroup = treeoutput.OutputGroup(selSpots)
+                outputGroup.addBlanksBetween()
+                outputGroup.addSiblingPrefixes()
         self.setHtml('\n'.join(outputGroup.getLines()))
         self.setSearchPaths([str(globalref.mainControl.defaultPathObj(True))])
 

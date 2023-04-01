@@ -704,6 +704,7 @@ class TreeWindow(QMainWindow):
         Arguments:
             checked -- True if to be shown, False if to be hidden
         """
+        self.outputSplitter.widget(0).showDescendants = checked
         self.outputSplitter.widget(1).showDescendants = checked
         self.updateRightViews()
 
